@@ -6,8 +6,14 @@ name = "pypi"
 [packages]
 fastapi = "*"
 pydantic = "*"
+uvicorn = "*"
+python-dotenv = "*"
+loguru = "*"
 
 [dev-packages]
+flake8 = "*"
+black = "*"
+isort = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"
