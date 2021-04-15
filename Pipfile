@@ -9,6 +9,7 @@ pydantic = "*"
 uvicorn = "*"
 python-dotenv = "*"
 loguru = "*"
+email-validator = "*"
 
 [dev-packages]
 flake8 = "*"
