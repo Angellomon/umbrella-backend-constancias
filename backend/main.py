@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from loguru import logger
+from fastapi.staticfiles import StaticFiles
 
 from .core.config import get_settings
 from .core.logging import setup_loguru
@@ -10,8 +10,8 @@ s = get_settings()
 
 app = FastAPI(openapi_url=f"{s.BASE_URL}/openapi.json")
 
-app.add_event_handler("startup", setup_loguru)
+app.mount("/static", StaticFiles(directory=s.STATIC_DIR), name="static")
 
-logger.debug(s.BASE_URL)
+app.add_event_handler("startup", setup_loguru)
 
 app.include_router(api_router, prefix=s.BASE_URL)

@@ -1,10 +1,12 @@
 <html>
-  <head></head>
+  <head>
+    <link href="test.css" rel="stylesheet" />
+  </head>
   <body>
-    <h1>Interest Rate: {{ interest_rate * 100 }}%</h1>
+    <h1 class="titulo">Interest Rate: {{ interest_rate * 100 }}%</h1>
     <table>
       <tr>
-        <th>Name</th>
+        <th>Names</th>
       </tr>
       {% for name in names %}
       <tr>

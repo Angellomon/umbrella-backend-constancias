@@ -8,6 +8,9 @@ class Settings(BaseSettings):
     BASE_URL: str = "/api/v1"
     SECRET_KEY: str = "aninspiringcompany"
     PROJECT_NAME: str
+    STATIC_DIR: str = "backend/static"
+    TEMPLATES_DIR: str = "backend/templates"
+    TEST_TEMPLATE: str = "test-pdf.html"
     # SECRET_KEY: str = secrets.token_urlsafe(32)
 
     class Config:
