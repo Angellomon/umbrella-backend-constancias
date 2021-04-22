@@ -5,16 +5,38 @@ from starlette.responses import Response
 from starlette.templating import Jinja2Templates
 from weasyprint import HTML
 
+from ...models.asistentes import Asistente
 from .deps import get_templates
 
 router = APIRouter()
+
+asistentes = [
+    Asistente(
+        folio="0001",
+        primer_nombre="Angel",
+        apellido_p="Martínez",
+        apellido_m="Díaz",
+        correo="angelmtzdiaz@gmail.com",
+    ),
+    Asistente(
+        folio="0002",
+        primer_nombre="Angel",
+        segundo_nombre="El Malvado",
+        apellido_p="Martínez",
+        apellido_m="Díaz",
+        correo="angelmtzdiaz@gmail.com",
+    ),
+]
 
 
 @router.get("/")
 async def test(request: Request, templates: Jinja2Templates = Depends(get_templates)):
     t = templates.get_template("test-pdf.html")
+    asistente = asistentes[1]
     result = t.render(
-        interest_rate=0.34, names=["angel", "angel malvado"], request=request
+        asistente=asistente.nombre_completo,
+        folio=asistente.folio,
+        request=request,
     )
 
     html_doc = HTML(

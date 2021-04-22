@@ -1,18 +1,38 @@
 <html>
   <head>
     <link href="test.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;400&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body>
-    <h1 class="titulo">Interest Rate: {{ interest_rate * 100 }}%</h1>
-    <table>
-      <tr>
-        <th>Names</th>
-      </tr>
-      {% for name in names %}
-      <tr>
-        <td>{{ name }}</td>
-      </tr>
-      {% endfor %}
-    </table>
+  <body
+    style="
+      background-image: url('constancias2021-02.png');
+      background-size: cover;
+    "
+  >
+    <div
+      style="
+        width: 100%;
+        text-align: right;
+        margin-right: 50px;
+        margin-top: 43px;
+        font-size: 2rem;
+      "
+    >
+      {{folio}}
+    </div>
+    <div
+      style="
+        width: 100%;
+        text-align: center;
+        margin-top: 137px;
+        font-size: 3.5rem;
+      "
+    >
+      {{asistente}}
+    </div>
   </body>
 </html>
