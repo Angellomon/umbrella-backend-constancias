@@ -32,3 +32,10 @@ class User(UserBase):
         if self.role == Roles.admin:
             return gen_admin_scopes()
         return []
+
+
+class UserCreate(BaseModel):
+    username: str
+    nombre: str
+    role: Roles
+    password: str
