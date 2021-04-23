@@ -12,15 +12,15 @@ DBSession = Optional[AsyncIOMotorClientSession]
 class Database:
     client: AsyncIOMotorClient
 
-    cnaequina_db: AsyncIOMotorDatabase
+    naequina_db: AsyncIOMotorDatabase
 
     @property
     def asistentes_collection(self) -> AsyncIOMotorDatabase:
-        return self.cnaequina_db["asistentes"]
+        return self.naequina_db["asistentes"]
 
     @property
     def entidades_collection(self) -> AsyncIOMotorDatabase:
-        return self.cnaequina_db["entidades"]
+        return self.naequina_db["entidades"]
 
 
 db = Database()

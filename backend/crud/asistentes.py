@@ -1,8 +1,10 @@
 from typing import Optional
 from backend.models.counters import Entidades
-from ..models.asistentes import Asistente, AsistenteCreate
+from ..models.asistentes import Asistente, AsistenteCreate, AsistenteUpdate
 from ..crud.counters import EntityManager
 from ..db.mongodb import Database, DBSession
+
+from pymongo import ReturnDocument
 
 
 async def crear_asistente(
@@ -25,7 +27,7 @@ async def get_asistente(
 ) -> Optional[Asistente]:
     collection = db.asistentes_collection
 
-    asistente = await collection.find_one({"email": email}, session=session)
+    asistente = await collection.find_one({"correo": email}, session=session)
 
     return Asistente(**asistente) if asistente else None
 
@@ -41,3 +43,23 @@ async def get_asistentes(db: Database, *, session: DBSession = None) -> list[Asi
         result.append(Asistente(**doc))
 
     return result
+
+
+async def update_asistente(
+    db: Database,
+    /,
+    folio: str,
+    asistente_data: AsistenteUpdate,
+    *,
+    session: DBSession = None,
+):
+    collection = db.asistentes_collection
+
+    asistente_doc = await collection.find_one_and_update(
+        {"folio": folio},
+        {"$set": asistente_data.dict(exclude_none=True)},
+        return_document=ReturnDocument.AFTER,
+        session=session,
+    )
+
+    return Asistente(**asistente_doc) if asistente_doc else None

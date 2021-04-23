@@ -8,9 +8,13 @@ async def get_count(
 ) -> Optional[EntityCounter]:
     collection = db.entidades_collection
 
+    from loguru import logger
+
+    logger.debug({"clave": f"{entity}"})
+
     entity_doc = await collection.find_one({"clave": f"{entity}"}, session=session)
 
-    return EntityCounter(**entity_doc) if entity else None
+    return EntityCounter(**entity_doc) if entity_doc else None
 
 
 async def increment_count(
@@ -22,7 +26,7 @@ async def increment_count(
         {"clave": f"{entity}"}, {"$inc": {"valor": 1}}, session=session
     )
 
-    return EntityCounter(**entity_doc) if entity else None
+    return EntityCounter(**entity_doc) if entity_doc else None
 
 
 class EntityManager:
@@ -42,5 +46,5 @@ class EntityManager:
 
         return entity
 
-    async def __aexit__(self):
+    async def __aexit__(self, *args):
         await increment_count(self.db, self.entity)

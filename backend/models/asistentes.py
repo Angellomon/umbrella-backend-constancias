@@ -26,7 +26,7 @@ class Asistente(AsistenteBase):
 
 class AsistenteCreate(BaseModel):
     primer_nombre: str
-    segundo_nombre: str
+    segundo_nombre: Optional[str] = None
     apellido_p: str
     apellido_m: str
     correo: EmailStr
