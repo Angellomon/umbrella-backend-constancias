@@ -1,7 +1,7 @@
 import os
 from functools import lru_cache
 
-from pydantic import BaseSettings
+from pydantic import BaseSettings, AnyUrl
 
 
 class Settings(BaseSettings):
@@ -11,6 +11,8 @@ class Settings(BaseSettings):
     STATIC_DIR: str = "backend/static"
     TEMPLATES_DIR: str = "backend/templates"
     TEST_TEMPLATE: str = "test-pdf.html"
+
+    MONGODB_URL: AnyUrl
     # SECRET_KEY: str = secrets.token_urlsafe(32)
 
     class Config:
