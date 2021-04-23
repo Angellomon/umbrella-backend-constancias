@@ -22,6 +22,10 @@ class Database:
     def entidades_collection(self) -> AsyncIOMotorDatabase:
         return self.naequina_db["entidades"]
 
+    @property
+    def users_collection(self) -> AsyncIOMotorClient:
+        return self.naequina_db["users"]
+
 
 db = Database()
 

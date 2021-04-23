@@ -16,6 +16,7 @@ aiofiles = "*"
 motor = {extras = ["asyncio"], version = "*"}
 passlib = "*"
 bcrypt = "*"
+python-jose = {extras = ["cryptography"], version = "*"}
 
 [dev-packages]
 flake8 = "*"
