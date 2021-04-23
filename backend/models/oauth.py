@@ -1,7 +1,6 @@
 from datetime import datetime
-from typing import Optional
 
-from pydantic import BaseModel, AnyHttpUrl
+from pydantic import BaseModel
 
 
 class Scopes(BaseModel):
@@ -10,6 +9,11 @@ class Scopes(BaseModel):
     UPDATE_ASISTENTES: str = "update:asistentes"
     DELETE_ASISTENTES: str = "delete:asistentes"
 
+    CREATE_USER: str = "create:user"
+    READ_USERS: str = "read:users"
+    UPDATE_USER: str = "update:user"
+    DELETE_USER: str = "delete:user"
+
 
 class Token(BaseModel):
     access_token: str
@@ -17,7 +21,7 @@ class Token(BaseModel):
 
 
 class TokenPayload(BaseModel):
-    iss: Optional[AnyHttpUrl]
+    # iss: Optional[AnyHttpUrl]
     sub: str  # * clave de usuario
     exp: datetime
     iat: datetime

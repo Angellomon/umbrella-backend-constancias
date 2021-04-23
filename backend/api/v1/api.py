@@ -7,6 +7,7 @@ from weasyprint import HTML
 
 from .endpoints.asistentes import router as asistentes_router
 from .endpoints.users import router as usuarios_router
+from .endpoints.oauth import router as oauth_router
 
 from ...models.asistentes import Asistente
 from .deps import get_templates
@@ -56,3 +57,4 @@ async def test(request: Request, templates: Jinja2Templates = Depends(get_templa
 
 router.include_router(asistentes_router, prefix="/asistentes")
 router.include_router(usuarios_router, prefix="/users")
+router.include_router(oauth_router, prefix="/oauth")

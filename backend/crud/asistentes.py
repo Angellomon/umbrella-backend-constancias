@@ -23,11 +23,11 @@ async def crear_asistente(
 
 
 async def get_asistente(
-    db: Database, /, email: str, *, session: DBSession = None
+    db: Database, /, correo: str, *, session: DBSession = None
 ) -> Optional[Asistente]:
     collection = db.asistentes_collection
 
-    asistente = await collection.find_one({"correo": email}, session=session)
+    asistente = await collection.find_one({"correo": correo}, session=session)
 
     return Asistente(**asistente) if asistente else None
 

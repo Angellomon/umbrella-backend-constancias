@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     STATIC_DIR: str = "backend/static"
     TEMPLATES_DIR: str = "backend/templates"
     TEST_TEMPLATE: str = "test-pdf.html"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 240
+    SERVER_NAME: str = "NAEQUINA-constancias"
+    SERVER_HOST: str = "localhost"
 
     MONGODB_URL: AnyUrl
     # SECRET_KEY: str = secrets.token_urlsafe(32)

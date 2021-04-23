@@ -1,21 +1,25 @@
-from fastapi import APIRouter, Depends, Query, status
+from fastapi import APIRouter, Depends, Query, Security, status
 from fastapi.exceptions import HTTPException
 from pydantic import EmailStr
 
+from ....core.oauth import get_scopes
+from ....crud.asistentes import crear_asistente as _crear_asistente
+from ....crud.asistentes import get_asistente as _get_asistente
+from ....crud.asistentes import get_asistentes as _get_asistentes
+from ....crud.asistentes import update_asistente as _update_asistente
 from ....models.asistentes import Asistente, AsistenteCreate, AsistenteUpdate
-from ..deps import Database, get_database
-from ....crud.asistentes import (
-    get_asistentes as _get_asistentes,
-    get_asistente as _get_asistente,
-    crear_asistente as _crear_asistente,
-    update_asistente as _update_asistente,
-)
+from ....models.users import User
+from ..deps import Database, get_current_user, get_database
 
 router = APIRouter(tags=["Asistentes"])
+s = get_scopes()
 
 
 @router.get("/", response_model=list[Asistente])
-async def get_asistentes(db: Database = Depends(get_database)):
+async def get_asistentes(
+    db: Database = Depends(get_database),
+    user: User = Security(get_current_user, scopes=[s.READ_ASISTENTES]),
+):
     asistentes = await _get_asistentes(db)
 
     return asistentes
@@ -38,7 +42,9 @@ async def get_asistente(
 
 @router.post("/", response_model=Asistente)
 async def crear_asistente(
-    asistente_data: AsistenteCreate, db: Database = Depends(get_database)
+    asistente_data: AsistenteCreate,
+    db: Database = Depends(get_database),
+    user: User = Security(get_current_user, scopes=[s.CREATE_ASISTENTES]),
 ):
     asistente = await _crear_asistente(db, asistente_data)
 
@@ -47,7 +53,10 @@ async def crear_asistente(
 
 @router.patch("/{folio}", response_model=Asistente)
 async def update_asistente(
-    folio: str, asistente_data: AsistenteUpdate, db: Database = Depends(get_database)
+    folio: str,
+    asistente_data: AsistenteUpdate,
+    db: Database = Depends(get_database),
+    user: User = Security(get_current_user, scopes=[s.UPDATE_ASISTENTES]),
 ):
     asistente = await _update_asistente(db, folio, asistente_data)
 

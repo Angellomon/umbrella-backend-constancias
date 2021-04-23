@@ -26,6 +26,10 @@ oauth_scheme = OAuth2PasswordBearer(
         s.READ_ASISTENTES: "Puede consultar a los asistentes",
         s.UPDATE_ASISTENTES: "Puede actualizar asistentes",
         s.DELETE_ASISTENTES: "Puede eliminar asistentes",
+        s.CREATE_USER: "Puede crear usuarios",
+        s.READ_USERS: "Puede consultar usuarios",
+        s.UPDATE_USER: "Puede actualizar usuarios",
+        s.DELETE_USER: "Puede eliminar usuarios",
     },
 )
 
@@ -50,7 +54,7 @@ async def get_current_user(
             token,
             settings.SECRET_KEY,
             algorithms=[ALGORITHM],
-            audience=settings.PROJECT_NAME,
+            audience=settings.SERVER_NAME,
         )
         token_data = TokenPayload(**payload)
     except JWTError as error:
