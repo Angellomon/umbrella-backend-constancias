@@ -1,4 +1,4 @@
-import os
+# import os
 from functools import lru_cache
 
 from pydantic import BaseSettings, AnyUrl
@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     # SECRET_KEY: str = secrets.token_urlsafe(32)
 
     class Config:
-        env_file = ".env" if os.environ.get("MODE") == "PROD" else ".env.local"
+        env_file = ".env"  # if os.environ.get("MODE") == "PROD" else ".env.local"
         env_file_encoding = "utf-8"
 
 
