@@ -1,0 +1,16 @@
+_id: env_1098834ed1034eada57ce97c1f46e12dd80b9fb7
+type: Environment
+parentId: wrk_e18b39bd87244d688662162856e83475
+modified: 1619198778258
+created: 1618462608898
+name: Base Environment
+data:
+  api_url: http://localhost:5000/api/v1
+  access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2aWN0b3IiLCJzY29wZXMiOlsiY3JlYXRlOmFzaXN0ZW50ZXMiLCJyZWFkOmFzaXN0ZW50ZXMiLCJ1cGRhdGU6YXNpc3RlbnRlcyIsImRlbGV0ZTphc2lzdGVudGVzIiwiY3JlYXRlOnVzZXIiLCJyZWFkOnVzZXJzIiwidXBkYXRlOnVzZXIiLCJkZWxldGU6dXNlciJdLCJhdWQiOiJOQUVRVUlOQS1jb25zdGFuY2lhcyIsImlzcyI6ImxvY2FsaG9zdCIsImV4cCI6MTYxOTIxMzE3MS40NzA4NiwiaWF0IjoxNjE5MTk4NzcxLjQ3MDg3NX0.NQVygStUf2eAyMJgIgKK-_iERO4tDSYXx3wp8IbZYNk
+dataPropertyOrder:
+  "&":
+    - api_url
+    - access_token
+color: null
+isPrivate: false
+metaSortKey: 1618462608898

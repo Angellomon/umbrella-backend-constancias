@@ -1,0 +1,32 @@
+_id: req_d52dfaaf369a48d0a7abbe52da99aea4
+type: Request
+parentId: fld_e2d2c2118d07411dbc383b1f913f7324
+modified: 1619198274781
+created: 1619191684528
+url: "{{ _.api_url }}/asistentes"
+name: Crear Asistente
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"primer_nombre": "Angel",
+    	"apellido_p": "Martínez",
+    	"apellido_m": "Díaz",
+    	"correo": "angelmtzdiaz@gmail.com"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_085d5e87228a4a4cb9d1837c8090c236
+authentication: {}
+metaSortKey: -1619191484457
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

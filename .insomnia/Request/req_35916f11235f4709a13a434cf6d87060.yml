@@ -1,0 +1,32 @@
+_id: req_35916f11235f4709a13a434cf6d87060
+type: Request
+parentId: fld_b9dc46a78af042bbb84e334890ee6cee
+modified: 1619197023880
+created: 1619196968693
+url: "{{ _.api_url }}/users"
+name: Crear Usuario
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"username": "victor",
+    	"password": "passtest",
+    	"role": "admin",
+    	"nombre": "Víctor"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_6c9cdc8d843e4f34bcad5a6154bd2e90
+authentication: {}
+metaSortKey: -1619196968754
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

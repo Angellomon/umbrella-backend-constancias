@@ -1,0 +1,27 @@
+_id: req_f7fee8e041934194be4e64a7fa71eeb9
+type: Request
+parentId: fld_195c5d3675064a2890a995ac17a357f6
+modified: 1619197878217
+created: 1619197841408
+url: ""
+name: Login
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: oauth2
+  grantType: password
+  username: victor
+  password: passtest
+  accessTokenUrl: "{{ _.api_url }}/oauth/token"
+  credentialsInBody: true
+metaSortKey: -1619197841408
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
