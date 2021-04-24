@@ -63,3 +63,13 @@ async def update_asistente(
     )
 
     return Asistente(**asistente_doc) if asistente_doc else None
+
+
+async def remove_asistente(db: Database, /, folio: str, *, session: DBSession = None):
+    collection = db.asistentes_collection
+
+    asistente_doc = await collection.find_one_and_delete(
+        {"folio": folio}, session=session
+    )
+
+    return Asistente(**asistente_doc) if asistente_doc else None
