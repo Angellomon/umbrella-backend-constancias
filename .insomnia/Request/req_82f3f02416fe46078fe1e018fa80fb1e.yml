@@ -1,0 +1,23 @@
+_id: req_82f3f02416fe46078fe1e018fa80fb1e
+type: Request
+parentId: fld_b9dc46a78af042bbb84e334890ee6cee
+modified: 1619198520513
+created: 1619198481181
+url: "{{ _.api_url }}/users/victor"
+name: Obtener Usuario
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{{ _.access_token }}"
+metaSortKey: -1619198481181
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,23 @@
+_id: req_122adfea7abe4a7aa46da5d939458f68
+type: Request
+parentId: fld_e2d2c2118d07411dbc383b1f913f7324
+modified: 1619199090807
+created: 1619191484207
+url: "{{ _.api_url }}/asistentes"
+name: Obtener Asistentes
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{{ _.access_token }}"
+metaSortKey: -1619191484407
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

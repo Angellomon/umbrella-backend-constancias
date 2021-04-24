@@ -1,0 +1,25 @@
+_id: req_c364f4707f5c41f793cec6219ed54912
+type: Request
+parentId: fld_e2d2c2118d07411dbc383b1f913f7324
+modified: 1619199266377
+created: 1619192818346
+url: "{{ _.api_url }}/asistentes/buscar"
+name: Buscar Asistente
+description: ""
+method: GET
+body: {}
+parameters:
+  - name: correo
+    value: angelmtzdiaz@gmail.com
+    description: ""
+    id: pair_0ab7ad9a999c49ae9a01db7119636f0b
+headers: []
+authentication: {}
+metaSortKey: -1619191484382
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

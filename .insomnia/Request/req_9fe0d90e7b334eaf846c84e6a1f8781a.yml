@@ -1,0 +1,29 @@
+_id: req_9fe0d90e7b334eaf846c84e6a1f8781a
+type: Request
+parentId: fld_e2d2c2118d07411dbc383b1f913f7324
+modified: 1619198268794
+created: 1619193569434
+url: "{{ _.api_url }}/asistentes/0001"
+name: Update Asistente
+description: ""
+method: PATCH
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"primer_nombre": "Angello"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_b3c938f9787b4fbcbeedbeccc6051421
+authentication: {}
+metaSortKey: -1619191484357
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
