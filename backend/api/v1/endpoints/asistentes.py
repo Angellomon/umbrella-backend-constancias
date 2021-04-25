@@ -1,6 +1,8 @@
-from fastapi import APIRouter, Depends, Query, Security, status
+from fastapi import APIRouter, Depends, Query, Security, status, Response, Request
 from fastapi.exceptions import HTTPException
+from starlette.templating import Jinja2Templates
 from pydantic import EmailStr
+from weasyprint import HTML
 
 from ....core.oauth import get_scopes
 from ....crud.asistentes import crear_asistente as _crear_asistente
@@ -10,7 +12,7 @@ from ....crud.asistentes import update_asistente as _update_asistente
 from ....crud.asistentes import remove_asistente as _remove_asistente
 from ....models.asistentes import Asistente, AsistenteCreate, AsistenteUpdate
 from ....models.users import User
-from ..deps import Database, get_current_user, get_database
+from ..deps import Database, get_current_user, get_database, get_templates
 
 router = APIRouter(tags=["Asistentes"])
 s = get_scopes()
@@ -28,7 +30,10 @@ async def get_asistentes(
 
 @router.get("/buscar", response_model=Asistente)
 async def get_asistente(
-    db: Database = Depends(get_database), correo: EmailStr = Query(...)
+    request: Request,
+    db: Database = Depends(get_database),
+    correo: EmailStr = Query(...),
+    templates: Jinja2Templates = Depends(get_templates),
 ):
     asistente = await _get_asistente(db, correo)
 
@@ -38,7 +43,22 @@ async def get_asistente(
             detail=f"asistente no encontrado (correo={correo})",
         )
 
-    return asistente
+    t = templates.get_template("test-pdf.html")
+
+    result = t.render(
+        asistente=asistente.nombre_completo,
+        folio=asistente.folio,
+        request=request,
+    )
+
+    html_doc = HTML(
+        string=result,
+        base_url="backend/static",
+    )
+
+    pdf = html_doc.write_pdf()
+
+    return Response(content=pdf, media_type="application/pdf")
 
 
 @router.post("/", response_model=Asistente)
