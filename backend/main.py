@@ -21,6 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# hmmm
 
 app.mount("/static", StaticFiles(directory=s.STATIC_DIR), name="static")
 
