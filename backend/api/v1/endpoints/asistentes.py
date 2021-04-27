@@ -64,7 +64,13 @@ async def get_asistente(
 
     pdf = html_doc.write_pdf()
 
-    return Response(content=pdf, media_type="application/pdf")
+    return Response(
+        content=pdf,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": f'attachment; filename="constancia-{asistente.folio}.pdf"'
+        },
+    )
 
 
 @router.post("/", response_model=Asistente)
