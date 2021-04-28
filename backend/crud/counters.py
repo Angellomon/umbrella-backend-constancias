@@ -29,6 +29,18 @@ async def increment_count(
     return EntityCounter(**entity_doc) if entity_doc else None
 
 
+async def set_count(
+    db: Database, /, entity: Entidades, *, count: int = 0, session: DBSession = None
+):
+    collection = db.entidades_collection
+
+    entity_doc = await collection.find_one_and_update(
+        {"clave": f"{entity}"}, {"$set": {"valor": count}}, session=session
+    )
+
+    return EntityCounter(**entity_doc) if entity_doc else None
+
+
 class EntityManager:
     entity: Entidades
     db: Database
