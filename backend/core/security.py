@@ -7,7 +7,7 @@ from passlib.context import CryptContext
 from .config import get_settings
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
+# g
 
 ALGORITHM = "HS256"
 access_token_jwt_subject = "access"
