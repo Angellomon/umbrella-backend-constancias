@@ -23,6 +23,7 @@ python-multipart = "*"
 flake8 = "*"
 black = "*"
 isort = "*"
+rope = "*"
 
 [requires]
 python_version = "3.9"
