@@ -5,6 +5,7 @@ from motor.motor_asyncio import (
     AsyncIOMotorClientSession,
     AsyncIOMotorDatabase,
 )
+from motor.core import AgnosticCollection
 
 DBSession = Optional[AsyncIOMotorClientSession]
 
@@ -12,19 +13,23 @@ DBSession = Optional[AsyncIOMotorClientSession]
 class Database:
     client: AsyncIOMotorClient
 
-    naequina_db: AsyncIOMotorDatabase
+    constancias_db: AsyncIOMotorDatabase
 
     @property
-    def asistentes_collection(self) -> AsyncIOMotorDatabase:
-        return self.naequina_db["asistentes"]
+    def asistentes_collection(self) -> AgnosticCollection:
+        return self.constancias_db["asistentes"]
 
     @property
-    def entidades_collection(self) -> AsyncIOMotorDatabase:
-        return self.naequina_db["entidades"]
+    def entidades_collection(self) -> AgnosticCollection:
+        return self.constancias_db["entidades"]
 
     @property
-    def users_collection(self) -> AsyncIOMotorClient:
-        return self.naequina_db["users"]
+    def users_collection(self) -> AgnosticCollection:
+        return self.constancias_db["users"]
+
+    @property
+    def eventos(self) -> AgnosticCollection:
+        return self.constancias_db["eventos"]
 
 
 db = Database()
