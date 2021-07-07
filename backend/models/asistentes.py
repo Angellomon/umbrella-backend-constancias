@@ -44,6 +44,7 @@ class AsistenteUpdate(BaseModel):
     apellido_p: Optional[str] = None
     apellido_m: Optional[str] = None
     correo: Optional[EmailStr] = None
+    ya_descargo: Optional[bool] = None
 
 
 class AsistentesAlta(BaseModel):

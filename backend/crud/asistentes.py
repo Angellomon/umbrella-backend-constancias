@@ -79,17 +79,34 @@ async def crear_asistentes(
 
 
 async def get_asistente(
-    db: Database, /, clave_asistente: str, *, session: DBSession = None
+    db: Database,
+    /,
+    clave_asistente: str,
+    *,
+    session: DBSession = None,
+    clave_evento: Optional[str] = None,
 ) -> Optional[Asistente]:
+    query = {}
+
+    if clave_evento is not None:
+        query["clave_evento"] = clave_evento
+
     asistente = await db.asistentes.find_one(
-        {"clave": clave_asistente}, session=session
+        {"clave": clave_asistente, **query}, session=session
     )
 
     return Asistente(**asistente) if asistente else None
 
 
-async def get_asistentes(db: Database, *, session: DBSession = None) -> list[Asistente]:
-    cursor = db.asistentes.find({}, session=session)
+async def get_asistentes(
+    db: Database, *, session: DBSession = None, clave_evento: Optional[str] = None
+) -> list[Asistente]:
+    query = {}
+
+    if clave_evento is not None:
+        query["clave_evento"] = clave_evento
+
+    cursor = db.asistentes.find(query, session=session)
 
     result = []
 
@@ -102,13 +119,18 @@ async def get_asistentes(db: Database, *, session: DBSession = None) -> list[Asi
 async def update_asistente(
     db: Database,
     /,
-    folio: str,
+    clave_asistente: str,
     asistente_data: AsistenteUpdate,
     *,
     session: DBSession = None,
+    clave_evento: Optional[str] = None,
 ):
+    query = {}
+    if clave_evento is not None:
+        query["clave_evento"] = clave_evento
+
     asistente_doc = await db.asistentes.find_one_and_update(
-        {"folio": folio},
+        {"clave_asistente": clave_asistente, **query},
         {"$set": asistente_data.dict(exclude_none=True)},
         return_document=ReturnDocument.AFTER,
         session=session,
