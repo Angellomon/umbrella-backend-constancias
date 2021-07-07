@@ -1,10 +1,11 @@
 from typing import Optional
 from pydantic import BaseModel, EmailStr
-from nanoid import generate
+
+from ..core.claves import generar_clave
 
 
 class AsistenteBase(BaseModel):
-    clave: str = ""
+    clave: str = generar_clave()
     folio: str
     primer_nombre: str
     segundo_nombre: Optional[str] = None
