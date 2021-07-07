@@ -130,7 +130,7 @@ async def update_asistente(
         query["clave_evento"] = clave_evento
 
     asistente_doc = await db.asistentes.find_one_and_update(
-        {"clave_asistente": clave_asistente, **query},
+        {"clave": clave_asistente, **query},
         {"$set": asistente_data.dict(exclude_none=True)},
         return_document=ReturnDocument.AFTER,
         session=session,
