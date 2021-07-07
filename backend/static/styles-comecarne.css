@@ -1,0 +1,31 @@
+@font-face {
+  font-family: "Futura Condensed Extra Bold";
+  src: url("fonts/futura-condensed-extra-bold.otf");
+}
+
+@font-face {
+  font-family: "Futura Condensed Medium";
+  src: url("fonts/futura-condensed-medium.otf");
+}
+
+@page {
+  margin: 0mm;
+  size: letter;
+}
+
+body {
+  font-family: "Futura Condensed Medium", sans-serif;
+  background-image: url("constancia-comecarne.png");
+}
+
+.nombre {
+  width: 100%;
+  text-align: center;
+  margin-top: 200px;
+  font-size: 3.5rem;
+  line-height: 3.5em;
+}
+
+@page {
+  size: landscape;
+}

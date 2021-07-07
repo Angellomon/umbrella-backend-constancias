@@ -3,10 +3,10 @@ from fastapi import APIRouter, Security, status
 from fastapi.exceptions import HTTPException
 from fastapi.param_functions import Depends
 
-from ....crud.users import create_user as _create_user
-from ....crud.users import get_user as _get_user
-from ....db.mongodb import Database, get_database
-from ....models.users import User, UserCreate
+from ...crud.users import create_user as _create_user
+from ...crud.users import get_user as _get_user
+from ...db.mongodb import Database, get_database
+from ...models.users import User, UserCreate
 from ..deps import get_current_user
 
 router = APIRouter(tags=["Usuarios"])

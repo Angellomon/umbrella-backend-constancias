@@ -1,23 +1,23 @@
-from fastapi import APIRouter, Depends, Query, Security, status, Response, Request, Body
+from fastapi import APIRouter, Body, Depends, Query, Request, Response, Security, status
 from fastapi.exceptions import HTTPException
-from starlette.templating import Jinja2Templates
 from pydantic import EmailStr
+from starlette.templating import Jinja2Templates
 from weasyprint import HTML
 
-from ....core.oauth import get_scopes
-from ....crud.asistentes import crear_asistente as _crear_asistente
-from ....crud.asistentes import crear_asistentes as _crear_asistentes
-from ....crud.asistentes import get_asistente as _get_asistente
-from ....crud.asistentes import get_asistentes as _get_asistentes
-from ....crud.asistentes import update_asistente as _update_asistente
-from ....crud.asistentes import remove_asistente as _remove_asistente
-from ....models.asistentes import (
+from ...core.oauth import get_scopes
+from ...crud.asistentes import crear_asistente as _crear_asistente
+from ...crud.asistentes import crear_asistentes as _crear_asistentes
+from ...crud.asistentes import get_asistente as _get_asistente
+from ...crud.asistentes import get_asistentes as _get_asistentes
+from ...crud.asistentes import remove_asistente as _remove_asistente
+from ...crud.asistentes import update_asistente as _update_asistente
+from ...models.asistentes import (
     Asistente,
     AsistenteCreate,
-    AsistenteUpdate,
     AsistentesAlta,
+    AsistenteUpdate,
 )
-from ....models.users import User
+from ...models.users import User
 from ..deps import Database, get_current_user, get_database, get_templates
 
 router = APIRouter(tags=["Asistentes"])

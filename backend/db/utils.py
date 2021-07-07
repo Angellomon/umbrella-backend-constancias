@@ -3,7 +3,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from loguru import logger
 
 from ..core.config import Settings, get_settings
-from .mongodb import Database, get_database
+from .mongodb import get_database
 
 
 @logger.catch
@@ -16,7 +16,7 @@ async def connect(settings: Settings = Depends(get_settings)):
         uuidRepresentation="standard",
     )
 
-    db.naequina_db = db.client["NAEQUINA"]
+    db.constancias_db = db.client["CONSTANCIAS"]
 
 
 @logger.catch
