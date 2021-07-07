@@ -30,8 +30,14 @@ async def crear_evento(db: Database, /, evento_data: EventoCreate) -> Evento:
     return evento
 
 
-async def get_eventos(db: Database) -> List[Evento]:
-    cursor = db.eventos.find()
+async def get_eventos(
+    db: Database, /, clave_empresa: Optional[str] = None
+) -> List[Evento]:
+    query = {}
+    if clave_empresa is not None:
+        query["clave_empresa"] = clave_empresa
+
+    cursor = db.eventos.find(query)
 
     eventos = []
 
