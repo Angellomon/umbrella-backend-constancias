@@ -1,6 +1,6 @@
 from fastapi.param_functions import Security
 from backend.models.users import User
-from typing import List
+from typing import List, Optional
 
 from fastapi import APIRouter, Depends
 
@@ -29,10 +29,11 @@ async def crear_evento(
 
 @router.get("/", response_model=List[Evento])
 async def get_eventos(
+    clave_empresa: Optional[str] = None,
     db: Database = Depends(get_database),
     user: User = Security(get_current_user),
 ):
-    eventos = await _get_eventos(db)
+    eventos = await _get_eventos(db, clave_empresa=clave_empresa)
 
     return eventos
 
