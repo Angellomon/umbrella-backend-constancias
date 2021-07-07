@@ -1,4 +1,4 @@
-\@font-face {
+@font-face {
   font-family: "Futura Condensed Medium";
   src: url("fonts/futura-condensed-medium.otf");
 }
@@ -20,6 +20,7 @@ body {
   margin-top: 200px;
   font-size: 5rem;
   line-height: 3em;
+  font-family: "Futura Condensed Medium", sans-serif;
 }
 
 .folio {
@@ -27,5 +28,6 @@ body {
   float: right;
   margin-top: 200px;
   margin-right: 50px;
-  font-size: 3rem;
+  font-size: 2rem;
+  font-family: "Futura Condensed Medium", sans-serif;
 }
