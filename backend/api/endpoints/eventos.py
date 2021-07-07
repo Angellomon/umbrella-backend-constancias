@@ -113,7 +113,7 @@ async def crear_asistente(
     return asistente
 
 
-@router.get("/{clave_evento}/asistentes", response_model=Asistente)
+@router.get("/{clave_evento}/asistentes", response_model=List[Asistente])
 async def get_asistentes(
     clave_evento: str,
     db: Database = Depends(get_database),
