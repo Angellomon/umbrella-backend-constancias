@@ -11,6 +11,7 @@ class _EventoBase(BaseModel):
     total_asistentes: int = 0
     espacios: int = 4
     clave_empresa: Optional[str] = None
+    template: str = ""
 
 
 class Evento(_EventoBase):
@@ -25,6 +26,7 @@ class EventoCreate(BaseModel):
     inicio_folio: int = 1
     espacios: int = 4
     clave_empresa: Optional[str] = None
+    template: str = ""
 
 
 class EventoUpdate(BaseModel):
@@ -32,3 +34,5 @@ class EventoUpdate(BaseModel):
     inicio_folio: Optional[int] = None
     espacios: Optional[str] = None
     clave_empresa: Optional[str] = None
+    total_asistentes: Optional[int] = None
+    template: Optional[str] = None

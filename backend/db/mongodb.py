@@ -16,7 +16,7 @@ class Database:
     constancias_db: AsyncIOMotorDatabase
 
     @property
-    def asistentes_collection(self) -> AgnosticCollection:
+    def asistentes(self) -> AgnosticCollection:
         return self.constancias_db["asistentes"]
 
     @property

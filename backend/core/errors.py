@@ -16,3 +16,11 @@ class EmpresaNotFound(Exception):
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"empresa no encontrada (clave={clave_empresa})",
         )
+
+
+class AsistenteNotFound(Exception):
+    def __init__(self, clave_asistente: str) -> None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"asistente no encontrado (clave={clave_asistente})",
+        )

@@ -1,32 +1,48 @@
 from typing import Optional
-from backend.models.counters import Entidades
-from ..models.asistentes import (
-    Asistente,
-    AsistenteCreate,
-    AsistenteUpdate,
-    AsistentesAlta,
-)
-from ..crud.counters import EntityManager, set_count
-from ..db.mongodb import Database, DBSession
 
 from pymongo import ReturnDocument
 
+from ..crud.eventos import get_evento, update_evento
+from ..db.mongodb import Database, DBSession
+from ..models.asistentes import (
+    Asistente,
+    AsistenteCreate,
+    AsistentesAlta,
+    AsistenteUpdate,
+)
+from ..models.eventos import EventoUpdate
 
-def _generar_folio(folio: int, length: int = 4) -> str:
-    return f"{folio}".zfill(length)
+
+async def buscar_asistente(
+    db: Database, /, correo: str, clave_evento: str
+) -> Optional[Asistente]:
+    asistente_doc = await db.asistentes.find_one(
+        {"correo": correo, "clave_evento": clave_evento}
+    )
+
+    return Asistente(**asistente_doc) if asistente_doc else None
 
 
 async def crear_asistente(
     db: Database, /, asistente_data: AsistenteCreate, *, session: DBSession = None
 ) -> Asistente:
-    collection = db.asistentes_collection
+    evento = await get_evento(db, asistente_data.clave_evento)
 
-    async with EntityManager(Entidades.asistentes, db) as entity:
-        folio = _generar_folio(entity.valor)
+    assert (
+        evento is not None
+    ), f"evento no encontrado (clave={asistente_data.clave_evento})"
+    assert (
+        await buscar_asistente(db, asistente_data.correo, evento.clave) is None
+    ), f"el asistente ya se encuentra registrado en el evento (correo={asistente_data.correo}, evento={evento.nombre})"
 
-        asistente = Asistente(**asistente_data.dict(), folio=folio)
+    folio = evento.siguiente_folio
 
-        await collection.insert_one(asistente.dict(), session=session)
+    asistente = Asistente(**asistente_data.dict(), folio=folio)
+
+    await db.asistentes.insert_one(asistente.dict(), session=session)
+    await update_evento(
+        db, evento.clave, EventoUpdate(total_asistentes=evento.total_asistentes)
+    )
 
     return asistente
 
@@ -34,42 +50,46 @@ async def crear_asistente(
 async def crear_asistentes(
     db: Database,
     /,
+    clave_evento: str,
     alta_data: AsistentesAlta,
     *,
     session: DBSession = None,
 ) -> list[Asistente]:
-    collection = db.asistentes_collection
+    await db.asistentes.delete_many({"clave_evento": clave_evento}, session=session)
 
-    await collection.delete_many({}, session=session)
+    evento = await get_evento(db, clave_evento)
 
-    i = alta_data.cuenta_inicial
+    assert evento is not None, f"evento no encontrado (clave={clave_evento})"
+
+    evento.total_asistentes = 0
+    evento.inicio_folio = alta_data.cuenta_inicial
+
     data = []
 
     for asistente in alta_data.asistentes:
-        data.append(Asistente(folio=_generar_folio(i), **asistente.dict()))
-        i += 1
+        asistente.clave_evento = clave_evento
+        data.append(Asistente(folio=evento.siguiente_folio, **asistente.dict()))
 
-    await collection.insert_many([a.dict() for a in data])
-
-    await set_count(db, Entidades.asistentes, count=i)
+    await db.asistentes.insert_many([a.dict() for a in data])
+    await update_evento(
+        db, clave_evento, EventoUpdate(total_asistentes=evento.total_asistentes)
+    )
 
     return data
 
 
 async def get_asistente(
-    db: Database, /, correo: str, *, session: DBSession = None
+    db: Database, /, clave_asistente: str, *, session: DBSession = None
 ) -> Optional[Asistente]:
-    collection = db.asistentes_collection
-
-    asistente = await collection.find_one({"correo": correo}, session=session)
+    asistente = await db.asistentes.find_one(
+        {"clave": clave_asistente}, session=session
+    )
 
     return Asistente(**asistente) if asistente else None
 
 
 async def get_asistentes(db: Database, *, session: DBSession = None) -> list[Asistente]:
-    collection = db.asistentes_collection
-
-    cursor = collection.find({}, session=session)
+    cursor = db.asistentes.find({}, session=session)
 
     result = []
 
@@ -87,9 +107,7 @@ async def update_asistente(
     *,
     session: DBSession = None,
 ):
-    collection = db.asistentes_collection
-
-    asistente_doc = await collection.find_one_and_update(
+    asistente_doc = await db.asistentes.find_one_and_update(
         {"folio": folio},
         {"$set": asistente_data.dict(exclude_none=True)},
         return_document=ReturnDocument.AFTER,
@@ -100,9 +118,7 @@ async def update_asistente(
 
 
 async def remove_asistente(db: Database, /, folio: str, *, session: DBSession = None):
-    collection = db.asistentes_collection
-
-    asistente_doc = await collection.find_one_and_delete(
+    asistente_doc = await db.asistentes.find_one_and_delete(
         {"folio": folio}, session=session
     )
 

@@ -13,7 +13,7 @@ class AsistenteBase(BaseModel):
     apellido_m: str
     correo: EmailStr
     ya_descargo: bool = False
-    evento: str = ""
+    clave_evento: str = ""
 
     @property
     def nombre_completo(self) -> str:
@@ -35,6 +35,7 @@ class AsistenteCreate(BaseModel):
     apellido_p: str
     apellido_m: str
     correo: EmailStr
+    clave_evento: str = ""
 
 
 class AsistenteUpdate(BaseModel):
@@ -48,3 +49,4 @@ class AsistenteUpdate(BaseModel):
 class AsistentesAlta(BaseModel):
     asistentes: list[AsistenteCreate]
     cuenta_inicial: int = 0
+    clave_evento: str = ""
