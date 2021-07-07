@@ -31,6 +31,10 @@ class Database:
     def eventos(self) -> AgnosticCollection:
         return self.constancias_db["eventos"]
 
+    @property
+    def empresas(self) -> AgnosticCollection:
+        return self.constancias_db["empresas"]
+
 
 db = Database()
 
