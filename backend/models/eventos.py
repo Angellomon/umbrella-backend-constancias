@@ -1,11 +1,11 @@
 from typing import Literal, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from ..core.claves import generar_clave
 
 
 class _EventoBase(BaseModel):
-    clave: str = generar_clave()
+    clave: str = Field(default_factory=lambda: generar_clave())
     nombre: str
     inicio_folio: int = 1
     total_asistentes: int = 0
