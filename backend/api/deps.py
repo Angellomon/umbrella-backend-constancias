@@ -8,13 +8,13 @@ from jose import jwt
 from jose.exceptions import JWTError
 from loguru import logger
 
-from ...core.config import Settings, get_settings
-from ...core.oauth import get_scopes
-from ...core.security import ALGORITHM
-from ...crud.users import get_user
-from ...db.mongodb import Database, get_database
-from ...models.oauth import TokenPayload
-from ...models.users import User
+from ..core.config import Settings, get_settings
+from ..core.oauth import get_scopes
+from ..core.security import ALGORITHM
+from ..crud.users import get_user
+from ..db.mongodb import Database, get_database
+from ..models.oauth import TokenPayload
+from ..models.users import User
 
 settings = get_settings()
 s = get_scopes()

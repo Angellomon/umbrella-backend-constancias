@@ -3,10 +3,10 @@ from fastapi.exceptions import HTTPException
 from fastapi.security import HTTPBasic, OAuth2PasswordRequestForm
 from loguru import logger
 
-from ....core.jwt import create_access_token
-from ....crud.users import authenticate_user
-from ....db.mongodb import Database, get_database
-from ....models.oauth import Token
+from ...core.jwt import create_access_token
+from ...crud.users import authenticate_user
+from ...db.mongodb import Database, get_database
+from ...models.oauth import Token
 
 router = APIRouter()
 

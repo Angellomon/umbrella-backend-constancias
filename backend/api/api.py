@@ -9,7 +9,7 @@ from .endpoints.asistentes import router as asistentes_router
 from .endpoints.users import router as usuarios_router
 from .endpoints.oauth import router as oauth_router
 
-from ...models.asistentes import Asistente
+from ..models.asistentes import Asistente
 from .deps import get_templates
 
 router = APIRouter()
