@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.requests import Request
+from starlette.responses import JSONResponse
 
 from .core.config import get_settings
 from .core.logging import setup_loguru
@@ -21,6 +23,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.exception_handler(AssertionError)
+def handle_assertion_error(request: Request, exc: AssertionError):
+    return JSONResponse(status_code=400, content={"message": exc.args})
+
 
 # hmmm
 
