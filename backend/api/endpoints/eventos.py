@@ -20,6 +20,8 @@ from ...crud.asistentes import (
     get_asistentes,
 )
 from ...crud.asistentes import get_asistente as _get_asistente
+from ...crud.asistentes import buscar_asistente, crear_asistente as _crear_asistente
+from ...crud.asistentes import get_asistentes as _get_asistentes
 from ...crud.asistentes import crear_asistentes as _crear_asistentes
 from ...crud.asistentes import update_asistente as _update_asistente
 from ...crud.asistentes import remove_asistente as _remove_asistente
@@ -109,7 +111,7 @@ async def get_asistentes_evento(
     db: Database = Depends(get_database),
     user: User = Security(get_current_user, scopes=[s.CREATE_ASISTENTES]),
 ):
-    asistentes = await get_asistentes(db, clave_evento=clave_evento)
+    asistentes = await _get_asistentes(db, clave_evento=clave_evento)
 
     return asistentes
 
@@ -126,6 +128,17 @@ async def crear_asistente(
     asistente = await _crear_asistente(db, asistente_data)
 
     return asistente
+
+
+@router.get("/{clave_evento}/asistentes", response_model=List[Asistente])
+async def get_asistentes(
+    clave_evento: str,
+    db: Database = Depends(get_database),
+    user: User = Security(get_current_user, scopes=[s.CREATE_ASISTENTES]),
+):
+    asistentes = await _get_asistentes(db, clave_evento=clave_evento)
+
+    return asistentes
 
 
 @router.post("/{clave_evento}/asistentes/many", response_model=list[Asistente])
@@ -148,7 +161,9 @@ async def update_asistente(
     db: Database = Depends(get_database),
     user: User = Security(get_current_user, scopes=[s.UPDATE_ASISTENTES]),
 ):
-    asistente = await _update_asistente(db, clave_asistente, asistente_data)
+    asistente = await _update_asistente(
+        db, clave_asistente, asistente_data, clave_evento=clave_evento
+    )
 
     if asistente is None:
         raise AsistenteNotFound(clave_asistente)
@@ -209,8 +224,11 @@ async def get_asistente(
 
     pdf = html_doc.write_pdf()
 
-    await db.asistentes.find_one_and_update(
-        {"clave": asistente.clave}, {"$set": {"ya_descargo": True}}
+    await _update_asistente(
+        db,
+        asistente.clave,
+        AsistenteUpdate(ya_descargo=True),
+        clave_evento=clave_evento,
     )
 
     return Response(

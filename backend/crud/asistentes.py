@@ -79,10 +79,20 @@ async def crear_asistentes(
 
 
 async def get_asistente(
-    db: Database, /, clave_asistente: str, *, session: DBSession = None
+    db: Database,
+    /,
+    clave_asistente: str,
+    *,
+    session: DBSession = None,
+    clave_evento: Optional[str] = None,
 ) -> Optional[Asistente]:
+    query = {}
+
+    if clave_evento is not None:
+        query["clave_evento"] = clave_evento
+
     asistente = await db.asistentes.find_one(
-        {"clave": clave_asistente}, session=session
+        {"clave": clave_asistente, **query}, session=session
     )
 
     return Asistente(**asistente) if asistente else None
@@ -113,9 +123,14 @@ async def update_asistente(
     asistente_data: AsistenteUpdate,
     *,
     session: DBSession = None,
+    clave_evento: Optional[str] = None,
 ):
+    query = {}
+    if clave_evento is not None:
+        query["clave_evento"] = clave_evento
+
     asistente_doc = await db.asistentes.find_one_and_update(
-        {"clave": clave_asistente},
+        {"clave": clave_asistente, **query},
         {"$set": asistente_data.dict(exclude_none=True)},
         return_document=ReturnDocument.AFTER,
         session=session,
