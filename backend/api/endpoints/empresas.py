@@ -1,3 +1,5 @@
+from backend.crud.eventos import get_eventos
+from backend.models.eventos import Evento
 from backend.core.errors import EmpresaNotFound
 from typing import List
 from fastapi import APIRouter, Depends, Security
@@ -62,7 +64,7 @@ async def update_empresa(
     return empresa
 
 
-@router.delete("./{clave_empresa}", response_model=Empresa)
+@router.delete("/{clave_empresa}", response_model=Empresa)
 async def delete_empresa(
     clave_empresa: str,
     db: Database = Depends(get_database),
@@ -74,3 +76,19 @@ async def delete_empresa(
         raise EmpresaNotFound(clave_empresa)
 
     return empresa
+
+
+@router.get("/{clave_empresa}/eventos", response_model=List[Evento])
+async def get_eventos_empresa(
+    clave_empresa: str,
+    db: Database = Depends(get_database),
+    user: User = Depends(get_current_user),
+):
+    empresa = await _get_empresa(db, clave_empresa)
+
+    if empresa is None:
+        raise EmpresaNotFound(clave_empresa)
+
+    eventos = await get_eventos(db, clave_empresa=clave_empresa)
+
+    return eventos
