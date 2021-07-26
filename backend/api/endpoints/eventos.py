@@ -14,7 +14,11 @@ from ...crud.eventos import delete_evento as _delete_evento
 from ...crud.eventos import get_evento as _get_evento
 from ...crud.eventos import get_eventos as _get_eventos
 from ...crud.eventos import update_evento as _update_evento
-from ...crud.asistentes import buscar_asistente, crear_asistente as _crear_asistente
+from ...crud.asistentes import (
+    buscar_asistente,
+    crear_asistente as _crear_asistente,
+    get_asistentes,
+)
 from ...crud.asistentes import get_asistente as _get_asistente
 from ...crud.asistentes import crear_asistentes as _crear_asistentes
 from ...crud.asistentes import update_asistente as _update_asistente
@@ -99,6 +103,17 @@ async def delete_evento(
     return evento
 
 
+@router.get("/{clave_evento}/asistentes")
+async def get_asistentes_evento(
+    clave_evento: str,
+    db: Database = Depends(get_database),
+    user: User = Security(get_current_user, scopes=[s.CREATE_ASISTENTES]),
+):
+    asistentes = await get_asistentes(db, clave_evento=clave_evento)
+
+    return asistentes
+
+
 @router.post("/{clave_evento}/asistentes", response_model=Asistente)
 async def crear_asistente(
     clave_evento: str,
@@ -173,7 +188,13 @@ async def get_asistente(
     if asistente is None:
         raise AsistenteNotFound(correo)
 
+    from loguru import logger
+
+    logger.debug(evento.template)
+
     t = templates.get_template(evento.template)
+
+    logger.debug(t)
 
     result = t.render(
         asistente=asistente.nombre_completo,
@@ -187,6 +208,10 @@ async def get_asistente(
     )
 
     pdf = html_doc.write_pdf()
+
+    await db.asistentes.find_one_and_update(
+        {"clave": asistente.clave}, {"$set": {"ya_descargo": True}}
+    )
 
     return Response(
         content=pdf,
