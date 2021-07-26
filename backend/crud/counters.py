@@ -8,10 +8,6 @@ async def get_count(
 ) -> Optional[EntityCounter]:
     collection = db.entidades_collection
 
-    from loguru import logger
-
-    logger.debug({"clave": f"{entity}"})
-
     entity_doc = await collection.find_one({"clave": f"{entity}"}, session=session)
 
     return EntityCounter(**entity_doc) if entity_doc else None

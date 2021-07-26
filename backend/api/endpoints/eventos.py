@@ -203,13 +203,7 @@ async def get_asistente(
     if asistente is None:
         raise AsistenteNotFound(correo)
 
-    from loguru import logger
-
-    logger.debug(evento.template)
-
     t = templates.get_template(evento.template)
-
-    logger.debug(t)
 
     result = t.render(
         asistente=asistente.nombre_completo,
