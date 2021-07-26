@@ -88,8 +88,15 @@ async def get_asistente(
     return Asistente(**asistente) if asistente else None
 
 
-async def get_asistentes(db: Database, *, session: DBSession = None) -> list[Asistente]:
-    cursor = db.asistentes.find({}, session=session)
+async def get_asistentes(
+    db: Database, *, clave_evento: Optional[str] = None, session: DBSession = None
+) -> list[Asistente]:
+    query = {}
+
+    if clave_evento is not None:
+        query["clave_evento"] = clave_evento
+
+    cursor = db.asistentes.find(query, session=session)
 
     result = []
 
@@ -102,13 +109,13 @@ async def get_asistentes(db: Database, *, session: DBSession = None) -> list[Asi
 async def update_asistente(
     db: Database,
     /,
-    folio: str,
+    clave_asistente: str,
     asistente_data: AsistenteUpdate,
     *,
     session: DBSession = None,
 ):
     asistente_doc = await db.asistentes.find_one_and_update(
-        {"folio": folio},
+        {"clave": clave_asistente},
         {"$set": asistente_data.dict(exclude_none=True)},
         return_document=ReturnDocument.AFTER,
         session=session,
@@ -117,9 +124,11 @@ async def update_asistente(
     return Asistente(**asistente_doc) if asistente_doc else None
 
 
-async def remove_asistente(db: Database, /, folio: str, *, session: DBSession = None):
+async def remove_asistente(
+    db: Database, /, clave_asistente: str, *, session: DBSession = None
+):
     asistente_doc = await db.asistentes.find_one_and_delete(
-        {"folio": folio}, session=session
+        {"clave": clave_asistente}, session=session
     )
 
     return Asistente(**asistente_doc) if asistente_doc else None
