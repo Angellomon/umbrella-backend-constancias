@@ -1,0 +1,31 @@
+@font-face {
+  font-family: "Futura Condensed Medium";
+  src: url("fonts/futura-condensed-medium.otf");
+}
+
+@page {
+  margin: 0mm;
+  size: 15.2in 8.5in;
+}
+
+body {
+  font-family: "Futura Condensed Medium", sans-serif;
+  background-image: url("constancia-comecarne-septiembre.png");
+  background-size: cover;
+}
+
+.nombre {
+  width: 100%;
+  text-align: center;
+  margin-top: 200px;
+  font-size: 5rem;
+  line-height: 3em;
+}
+
+.folio {
+  text-align: right;
+  float: right;
+  margin-top: 200px;
+  margin-right: 50px;
+  font-size: 3rem;
+}
