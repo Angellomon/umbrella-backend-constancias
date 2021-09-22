@@ -14,12 +14,7 @@ from ...crud.eventos import delete_evento as _delete_evento
 from ...crud.eventos import get_evento as _get_evento
 from ...crud.eventos import get_eventos as _get_eventos
 from ...crud.eventos import update_evento as _update_evento
-from ...crud.asistentes import (
-    buscar_asistente,
-    crear_asistente as _crear_asistente,
-    get_asistentes,
-)
-from ...crud.asistentes import get_asistente as _get_asistente
+
 from ...crud.asistentes import buscar_asistente, crear_asistente as _crear_asistente
 from ...crud.asistentes import get_asistentes as _get_asistentes
 from ...crud.asistentes import crear_asistentes as _crear_asistentes
