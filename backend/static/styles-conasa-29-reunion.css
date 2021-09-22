@@ -1,0 +1,35 @@
+@font-face {
+  font-family: "Myriad Regular";
+  src: url("fonts/myriad-pro-regular.ttf");
+}
+
+@page {
+  margin: 0mm;
+  size: 15.2in 8.5in;
+}
+
+body {
+  font-family: "Myriad Regular", sans-serif;
+  background-image: url("certificado-conasa-29-reunion.png");
+  background-size: cover;
+}
+
+.nombre {
+  width: 100%;
+  text-align: center;
+  margin-top: 150px;
+  font-size: 5rem;
+  line-height: 3em;
+  font-family: "Futura Condensed Medium", sans-serif;
+  color: white;
+}
+
+.folio {
+  text-align: right;
+  float: right;
+  margin-top: 200px;
+  margin-right: 50px;
+  font-size: 2rem;
+  font-family: "Futura Condensed Medium", sans-serif;
+  color: white;
+}
