@@ -203,6 +203,9 @@ async def get_asistente(
     result = t.render(
         asistente=asistente.nombre_completo,
         folio=asistente.folio,
+        name_class="nombre-largo"
+        if len(asistente.nombre_completo.replace(" ", "").strip()) > 20
+        else "nombre-chico",
         request=request,
     )
 
