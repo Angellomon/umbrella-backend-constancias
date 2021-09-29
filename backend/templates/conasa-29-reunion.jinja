@@ -4,7 +4,7 @@
     <link href="styles-conasa-29-reunion.css" rel="stylesheet" />
   </head>
   <body>
-    <div class="nombre">{{asistente}}</div>
+    <div class="nombre {{ name_class | default('nombre-chico') }}">{{asistente}}</div>
     <div class="folio">Folio {{folio}}</div>
   </body>
 </html>
