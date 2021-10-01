@@ -37,9 +37,9 @@ body {
 .folio {
   text-align: right;
   float: right;
-  bottom: 200px;
+  bottom: 150px;
   right: 50px;
-  font-size: 2rem;
+  font-size: 1.4rem;
   font-family: "Futura Condensed Medium", sans-serif;
   color: white;
   position: fixed;
