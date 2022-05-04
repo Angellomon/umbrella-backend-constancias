@@ -18,11 +18,15 @@ class AsistenteBase(BaseModel):
     @property
     def nombre_completo(self) -> str:
         apellidos = f"{self.apellido_p} {self.apellido_m}"
-        return (
-            f"{self.primer_nombre} {self.segundo_nombre} {apellidos}"
-            if self.segundo_nombre
-            else f"{self.primer_nombre} {apellidos}"
-        )
+
+        if self.segundo_nombre:
+            nombres = f"{self.primer_nombre} {self.segundo_nombre}"
+        else:
+            nombres = f"{self.primer_nombre}"
+
+        nombre_completo = f"{nombres} {apellidos}".upper()
+
+        return nombre_completo
 
 
 class Asistente(AsistenteBase):
