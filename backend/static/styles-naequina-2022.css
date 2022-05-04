@@ -1,12 +1,6 @@
 @font-face {
-  font-family: "Monserrat";
-  src: url("fonts/monserrat.eot"); /* IE9 Compat Modes */
-  src: url("fonts/monserrat.eot?#iefix") format("embedded-opentype"),
-    /* IE6-IE8 */ url("fonts/monserrat.woff2") format("woff2"),
-    /* Super Modern Browsers */ url("fonts/monserrat.woff") format("woff"),
-    /* Pretty Modern Browsers */ url("fonts/monserrat.ttf") format("truetype"),
-    /* Safari, Android, iOS */ url("fonts/monserrat.svg#svgFontName")
-      format("svg"); /* Legacy iOS */
+  font-family: "Montserrat Bold";
+  src: url("./fonts/montserrat-bold.ttf");
 }
 
 @page {
@@ -14,10 +8,47 @@
   size: letter;
 }
 
+html {
+  position: relative;
+  height: 100vh;
+}
+
 body {
-  font-family: "Monserrat", sans-serif;
+  font-family: "Montserrat Bold", sans-serif;
+  background-image: url("constancia-naequina-2022.png");
+  background-size: cover;
 }
 
 @page {
   size: landscape;
+}
+
+.nombre {
+  text-align: center;
+  line-height: 3.5rem;
+
+  font-size: 3.5rem;
+  font-weight: lighter;
+
+  position: absolute;
+}
+
+.nombre-chico {
+  top: 290px;
+  left: 32%;
+}
+
+.nombre-largo {
+  top: 250px;
+  left: 22%;
+}
+
+.folio {
+  position: absolute;
+
+  font-size: 2.3rem;
+  color: white;
+
+  left: 40px;
+  top: 55px;
 }
