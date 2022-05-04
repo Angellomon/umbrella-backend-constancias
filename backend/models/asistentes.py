@@ -44,7 +44,7 @@ class AsistenteCreate(BaseModel):
 
 class AsistenteUpdate(BaseModel):
     primer_nombre: Optional[str] = None
-    segundo_nAnyHttpUrlombre: Optional[str] = None
+    segundo_nombre: Optional[str] = None
     apellido_p: Optional[str] = None
     apellido_m: Optional[str] = None
     correo: Optional[EmailStr] = None
