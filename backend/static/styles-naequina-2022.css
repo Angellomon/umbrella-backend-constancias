@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Montserrat Bold";
-  src: url("./fonts/montserrat-bold.ttf");
+  src: url("./fonts/montserrat-semibold.ttf");
 }
 
 @page {
@@ -27,7 +27,7 @@ body {
   text-align: center;
   line-height: 3.5rem;
 
-  font-size: 3.5rem;
+  font-size: 3.1rem;
   font-weight: lighter;
 
   position: absolute;
