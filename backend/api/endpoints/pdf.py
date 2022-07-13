@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, Response
 from pydantic import EmailStr
 from backend.core.errors import AsistenteNotFound, EventoNotFound
-from backend.core.pdf.writer import Templates
 from backend.crud.asistentes import buscar_asistente
 
 from backend.db.mongodb import Database, get_database
