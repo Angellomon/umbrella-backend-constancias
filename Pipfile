@@ -19,6 +19,8 @@ bcrypt = "*"
 python-jose = {extras = ["cryptography"], version = "*"}
 python-multipart = "*"
 nanoid = "*"
+pypdf2 = "*"
+reportlab = "*"
 
 [dev-packages]
 flake8 = "*"
