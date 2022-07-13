@@ -24,7 +24,7 @@ async def obtener_pdf_asistente(clave_evento: str, correo: EmailStr, db: Databas
     if asistente is None:
         raise AsistenteNotFound(correo)
 
-    resultado = generar_pdf_constancia(asistente.folio, asistente.nombre_completo, Templates.COMECARNE_2022_COLOMBIA_NL_FILE)
+    resultado = generar_pdf_constancia(asistente.folio, asistente.nombre_completo, evento.template)
 
     resultado.seek(0)
 
