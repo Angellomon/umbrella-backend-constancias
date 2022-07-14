@@ -1,6 +1,6 @@
 from io import BytesIO
 from backend.core.pdf.canvas import Fonts, get_canvas
-from backend.core.pdf.writer import get_pdf, get_pdf_template, merge_pdf_template, replace_text_in_pdf
+from backend.core.pdf.writer import get_pdf, get_pdf_template, merge_pdf_template
 
 
 def generar_pdf_constancia(folio: str, nombre_asistente: str, template: str):
@@ -37,9 +37,9 @@ def generar_pdf_constancia(folio: str, nombre_asistente: str, template: str):
 
     pdf_template = get_pdf_template(template)  # type:ignore
 
-    pdf_text_replace = replace_text_in_pdf(pdf_template, "")
+    # pdf_text_replace = replace_text_in_pdf(pdf_template, "")
 
-    res_folio = merge_pdf_template(pdf_canvas_nombre, pdf_text_replace)
+    res_folio = merge_pdf_template(pdf_canvas_nombre, pdf_template)
     pdf_folio = get_pdf(initial_packet=res_folio)
 
     pdf_final = merge_pdf_template(pdf_canvas_folio, pdf_folio)
