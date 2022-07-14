@@ -6,7 +6,7 @@ from typing import Any, Dict, Optional
 
 import io
 
-from PyPDF2.generic import DecodedStreamObject, EncodedStreamObject, NameObject
+from PyPDF2.generic import ArrayObject, DecodedStreamObject, EncodedStreamObject, IndirectObject, NameObject
 
 
 class Templates(str, Enum):
@@ -22,7 +22,7 @@ def get_pdf_template(template: Templates, *, initial_packet: Optional[io.BytesIO
 
     tempalte_path = f"{TEMPLATES_DIR}/{template}"
 
-    return PdfFileReader(open(tempalte_path, "rb"))
+    return PdfFileReader(open(tempalte_path, "rb"), strict=False)
 
 
 def get_pdf(*, initial_packet: io.BytesIO = io.BytesIO()):
@@ -83,17 +83,18 @@ def replace_text_in_pdf(pdf: PdfReader, new_text: str):
 
     assert contents is not None, "no hay contenido @replace_text_in_pdf()"
 
-    # process_data(contents, new_text)
-
     if isinstance(contents, DecodedStreamObject) or isinstance(contents, EncodedStreamObject):
         process_data(contents, new_text)
-    elif len(contents) > 0:
+    else:
         for obj in contents:  # type: ignore
-            if isinstance(obj, DecodedStreamObject) or isinstance(obj, EncodedStreamObject):
+            if isinstance(obj, DecodedStreamObject) or isinstance(obj, EncodedStreamObject) or isinstance(obj, IndirectObject):
                 streamObj = obj.getObject()
                 process_data(streamObj, new_text)
 
-    page[NameObject("/Contents")] = contents.decodedSelf
+    if isinstance(contents, ArrayObject):
+        page[NameObject("/Contents")] = contents
+    else:
+        page[NameObject("/Contents")] = contents.decodedSelf
 
     result.addPage(page)
 
