@@ -1,0 +1,57 @@
+@font-face {
+  font-family: "Montserrat Bold";
+  src: url("./fonts/montserrat-semibold.ttf");
+}
+
+@page {
+  margin: 0mm;
+  size: letter;
+}
+
+html {
+  position: relative;
+  height: 100vh;
+}
+
+body {
+  font-family: "Montserrat Bold", sans-serif;
+  background-image: url("constancia-naequina-2022.png");
+  background-size: cover;
+}
+
+@page {
+  size: landscape;
+}
+
+.nombre {
+  text-align: center;
+  line-height: 3.5rem;
+
+  font-size: 2.8rem;
+  font-weight: lighter;
+
+  position: absolute;
+
+  width: 800px;
+}
+
+.nombre-chico {
+  top: 290px;
+  left: 25%;
+}
+
+.nombre-largo {
+  top: 250px;
+  left: 25%;
+  width: 20vw;
+}
+
+.folio {
+  position: absolute;
+
+  font-size: 2.3rem;
+  color: white;
+
+  left: 40px;
+  top: 55px;
+}
