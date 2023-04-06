@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Dict
+from typing import Dict, Optional
 
 from jose import jwt
 
@@ -10,7 +10,7 @@ ALGORITHM = "HS256"
 settings = get_settings()
 
 
-def create_access_token(data: Dict, expires_delta: timedelta = None) -> str:
+def create_access_token(data: Dict, expires_delta: Optional[timedelta] = None) -> str:
     to_encode = data.copy()
 
     if expires_delta:
