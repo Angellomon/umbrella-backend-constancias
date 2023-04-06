@@ -12,7 +12,9 @@ router = APIRouter()
 
 
 @router.get("/{clave_evento}")
-async def obtener_pdf_asistente(clave_evento: str, correo: EmailStr, db: Database = Depends(get_database)):
+async def obtener_pdf_asistente(
+    clave_evento: str, correo: EmailStr, db: Database = Depends(get_database)
+):
     evento = await _get_evento(db, clave_evento)
 
     if evento is None:
@@ -23,7 +25,14 @@ async def obtener_pdf_asistente(clave_evento: str, correo: EmailStr, db: Databas
     if asistente is None:
         raise AsistenteNotFound(correo)
 
-    resultado = generar_pdf_constancia(asistente.folio, asistente.nombre_completo, evento.template)
+    replace_text = evento.replace_text
+
+    resultado = generar_pdf_constancia(
+        asistente.folio,
+        asistente.nombre_completo,
+        evento.template,
+        replace_text=replace_text,
+    )
 
     resultado.seek(0)
 
