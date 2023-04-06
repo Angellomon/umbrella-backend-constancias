@@ -4,6 +4,11 @@ from pydantic import BaseModel, Field
 from ..core.claves import generar_clave
 
 
+class TextPositions(BaseModel):
+    folio: list[int]
+    nombre: list[int]
+
+
 class _EventoBase(BaseModel):
     clave: str = Field(default_factory=lambda: generar_clave())
     nombre: str
@@ -12,6 +17,9 @@ class _EventoBase(BaseModel):
     espacios: int = 4
     clave_empresa: Optional[str] = None
     template: str = ""
+
+    replace_text: bool = False
+    text_positions: Optional[TextPositions] = None
 
 
 class Evento(_EventoBase):
@@ -27,6 +35,7 @@ class EventoCreate(BaseModel):
     espacios: int = 4
     clave_empresa: Optional[str] = None
     template: str = ""
+    replace_text: bool = False
 
 
 class EventoUpdate(BaseModel):
@@ -36,3 +45,4 @@ class EventoUpdate(BaseModel):
     clave_empresa: Optional[str] = None
     total_asistentes: Optional[int] = None
     template: Optional[str] = None
+    replace_text: Optional[bool] = None
