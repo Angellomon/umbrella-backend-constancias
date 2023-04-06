@@ -1,0 +1,1 @@
+rsync -r . angel@servicios-umbrellacompany:~/services/backend-constancias --exclude-from='.gitignore' --exclude '.insomnia' --exclude '.vscode' --exclude .git -v
