@@ -6,7 +6,13 @@ from typing import Any, Dict, Optional
 
 import io
 
-from PyPDF2.generic import ArrayObject, DecodedStreamObject, EncodedStreamObject, IndirectObject, NameObject
+from PyPDF2.generic import (
+    ArrayObject,
+    DecodedStreamObject,
+    EncodedStreamObject,
+    IndirectObject,
+    NameObject,
+)
 
 
 class Templates(str, Enum):
@@ -16,7 +22,9 @@ class Templates(str, Enum):
 TEMPLATES_DIR = f"{sys.path[0]}/backend/templates"
 
 
-def get_pdf_template(template: Templates, *, initial_packet: Optional[io.BytesIO] = None):
+def get_pdf_template(
+    template: Templates, *, initial_packet: Optional[io.BytesIO] = None
+):
     if initial_packet is None:
         initial_packet = io.BytesIO()
 
@@ -44,7 +52,7 @@ def replace_text(content: Any, replacements: Dict = dict()):
 
         elif in_text:
             cmd = line[-2:]
-            if cmd.lower() == 'tj':
+            if cmd.lower() == "tj":
                 replaced_line = line
                 for k, v in replacements.items():
                     replaced_line = replaced_line.replace(k, v)
@@ -61,13 +69,11 @@ def replace_text(content: Any, replacements: Dict = dict()):
 def process_data(pdf_content: Any, s: str):
     data = pdf_content.get_data()
 
-    decoded_data = data.decode('utf-8')
+    decoded_data = data.decode("utf-8")
 
-    replaced_data = replace_text(decoded_data, {
-        "NOMBRE": s
-    })
+    replaced_data = replace_text(decoded_data, {"NOMBRE": s})
 
-    encoded_data = replaced_data.encode('utf-8')
+    encoded_data = replaced_data.encode("utf-8")
     if pdf_content.decodedSelf is not None:
         pdf_content.decodedSelf.setData(encoded_data)
     else:
@@ -83,11 +89,17 @@ def replace_text_in_pdf(pdf: PdfReader, new_text: str):
 
     assert contents is not None, "no hay contenido @replace_text_in_pdf()"
 
-    if isinstance(contents, DecodedStreamObject) or isinstance(contents, EncodedStreamObject):
+    if isinstance(contents, DecodedStreamObject) or isinstance(
+        contents, EncodedStreamObject
+    ):
         process_data(contents, new_text)
     else:
         for obj in contents:  # type: ignore
-            if isinstance(obj, DecodedStreamObject) or isinstance(obj, EncodedStreamObject) or isinstance(obj, IndirectObject):
+            if (
+                isinstance(obj, DecodedStreamObject)
+                or isinstance(obj, EncodedStreamObject)
+                or isinstance(obj, IndirectObject)
+            ):
                 streamObj = obj.getObject()
                 process_data(streamObj, new_text)
 
