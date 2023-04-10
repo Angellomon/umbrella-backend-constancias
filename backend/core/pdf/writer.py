@@ -109,12 +109,14 @@ def process_data(
     # print("---")
     encoded_data = replaced_data.encode("utf-8")
 
+    # BUG: set_data method is/may not updating its ref
     if pdf_content.decodedSelf is not None:
         pdf_content.decodedSelf.set_data(encoded_data)
     else:
         pdf_content.set_data(encoded_data)
 
 
+# TODO: figure out the bug
 def replace_text_in_pdf(pdf: PdfReader, contents: dict[str, str]):
     result = PdfWriter()
     b = io.BytesIO()
@@ -147,12 +149,13 @@ def replace_text_in_pdf(pdf: PdfReader, contents: dict[str, str]):
                 # or isinstance(obj, EncodedStreamObject)
                 isinstance(obj, IndirectObject)
             ):
-                streamObj: EncodedStreamObject = obj.getObject()  # type: ignore
+                stream_obj: EncodedStreamObject = obj.get_object()  # type: ignore
 
-                if streamObj is None:
+                if stream_obj is None:
                     continue
 
-                process_data(streamObj, contents)
+                # BUG: (clue) stream_obj may not be updating its reference
+                process_data(stream_obj, contents)
 
     if isinstance(page_contents, (ArrayObject, list)):
         # print(id(pdf.pages[0][NameObject("/Contents")]))
@@ -178,7 +181,7 @@ def replace_text_in_pdf(pdf: PdfReader, contents: dict[str, str]):
     result.pages[0][NameObject("/Contents")] = page.get_contents()
 
     print(
-        f"[178] {[content.getObject().get_data().decode()[-50:] for content in page[NameObject('/Contents')]]}\n"
+        f"[178] {[content.getObject().get_data().decode()[-50:] for content in page[NameObject('/Contents')]]}\n"  # type: ignore
     )
     # print(id(result.pages[0][NameObject("/Contents")]))
 
@@ -188,7 +191,7 @@ def replace_text_in_pdf(pdf: PdfReader, contents: dict[str, str]):
     print(
         [
             f"[183] {c.getObject().get_data().decode()[-50:]}\n"
-            for c in page.get_contents()
+            for c in page.get_contents()  # type: ignore
         ]
     )
     print("-" * 30)
