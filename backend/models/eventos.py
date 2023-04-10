@@ -1,5 +1,8 @@
 from typing import Literal, Optional
 from pydantic import BaseModel, Field
+from backend.core.pdf.canvas import Fonts
+
+from backend.core.pdf.writer import replace_text
 
 from ..core.claves import generar_clave
 
@@ -7,6 +10,22 @@ from ..core.claves import generar_clave
 class TextPositions(BaseModel):
     folio: list[int]
     nombre: list[int]
+
+
+class TextOptions(BaseModel):
+    font_size: int
+    font: Fonts = Fonts.MONTSERRAT_BOLD_ITALIC
+    position: list[int]
+    chars_before: str = ""
+
+
+class RenderSettings(BaseModel):
+    folio: TextOptions = TextOptions(
+        font_size=55,
+        position=[30, 180],
+        chars_before="#",
+    )
+    nombre: TextOptions = TextOptions(font_size=75, position=[950, 630])
 
 
 class _EventoBase(BaseModel):
@@ -19,7 +38,7 @@ class _EventoBase(BaseModel):
     template: str = ""
 
     replace_text: bool = False
-    text_positions: Optional[TextPositions] = None
+    render_settings: RenderSettings = RenderSettings()
 
 
 class Evento(_EventoBase):
@@ -35,7 +54,9 @@ class EventoCreate(BaseModel):
     espacios: int = 4
     clave_empresa: Optional[str] = None
     template: str = ""
+
     replace_text: bool = False
+    render_settings: RenderSettings = RenderSettings()
 
 
 class EventoUpdate(BaseModel):
@@ -45,5 +66,6 @@ class EventoUpdate(BaseModel):
     clave_empresa: Optional[str] = None
     total_asistentes: Optional[int] = None
     template: Optional[str] = None
+
     replace_text: Optional[bool] = None
-    text_positions: Optional[TextPositions] = None
+    render_settings: Optional[RenderSettings] = None
