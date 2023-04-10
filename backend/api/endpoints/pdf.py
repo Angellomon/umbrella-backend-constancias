@@ -4,7 +4,8 @@ from backend.core.errors import AsistenteNotFound, EventoNotFound
 from backend.crud.asistentes import buscar_asistente
 
 from backend.db.mongodb import Database, get_database
-from backend.core.constancias import generar_pdf_constancia
+from backend.core.constancias import generar_pdf_constancia_bytes
+from PyPDF2 import PdfReader
 
 from ...crud.eventos import get_evento as _get_evento
 
@@ -27,7 +28,7 @@ async def obtener_pdf_asistente(
 
     replace_text = evento.replace_text
 
-    resultado = generar_pdf_constancia(
+    resultado = generar_pdf_constancia_bytes(
         asistente.folio,
         asistente.nombre_completo,
         evento.template,
@@ -37,8 +38,6 @@ async def obtener_pdf_asistente(
     resultado.seek(0)
 
     r = resultado.read()
-
-    # resultado = generar_pdf_constancia(asistente.folio, asistente.nombre_completo, evento.template)
 
     return Response(
         content=r,
