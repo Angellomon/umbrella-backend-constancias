@@ -46,3 +46,4 @@ class EventoUpdate(BaseModel):
     total_asistentes: Optional[int] = None
     template: Optional[str] = None
     replace_text: Optional[bool] = None
+    text_positions: Optional[TextPositions] = None
