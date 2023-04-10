@@ -53,7 +53,9 @@ async def test_get_pdf_template():
     canvas.drawString(10, 100, "Hello world")
     canvas.save()
 
-    pdf = get_pdf_template(Templates.COMECARNE_2022_COLOMBIA_NL_FILE, initial_packet=packet)
+    pdf = get_pdf_template(
+        Templates.COMECARNE_2022_COLOMBIA_NL_FILE, initial_packet=packet
+    )
 
     print(pdf)
 
