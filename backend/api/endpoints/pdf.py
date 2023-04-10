@@ -26,14 +26,7 @@ async def obtener_pdf_asistente(
     if asistente is None:
         raise AsistenteNotFound(correo)
 
-    replace_text = evento.replace_text
-
-    resultado = generar_pdf_constancia_bytes(
-        asistente.folio,
-        asistente.nombre_completo,
-        evento.template,
-        replace_text=replace_text,
-    )
+    resultado = generar_pdf_constancia_bytes(asistente, evento)
 
     resultado.seek(0)
 
