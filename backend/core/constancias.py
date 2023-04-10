@@ -11,6 +11,7 @@ from backend.core.pdf.writer import (
 )
 
 
+# BUG: in replace_text opt (new pdf clones data from old doc)
 def generar_pdf_constancia_bytes(
     folio: str, nombre_asistente: str, template: str, replace_text: bool = False
 ):
