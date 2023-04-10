@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pymongo import ReturnDocument
+from pymongo.collection import ReturnDocument
 
 from ..db.mongodb import Database
 from ..models.eventos import Evento, EventoCreate, EventoUpdate
