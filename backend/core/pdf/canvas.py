@@ -12,17 +12,28 @@ from reportlab.lib.pagesizes import landscape
 
 class Fonts(str, Enum):
     MONTSERRAT_BOLD_ITALIC = "Montserrat Bold Italic"
-    MONTSERRAT_BOLD_ITALIC_FILE = 'montserrat-bold-italic.ttf'
+    MONTSERRAT_BOLD_ITALIC_FILE = "montserrat-bold-italic.ttf"
+
+    MONTSERRAT_BOLD = "Montserrat Bold"
+    MONTSERRAT_BOLD_FILE = "montserrat-bold.ttf"
 
 
 FONTS_DIR = sys.path[0]
 
 
-reportlab.rl_config.TTFSearchPath.append(str(FONTS_DIR) + '/backend/static/fonts')
-pdfmetrics.registerFont(TTFont(Fonts.MONTSERRAT_BOLD_ITALIC, Fonts.MONTSERRAT_BOLD_ITALIC_FILE))
+reportlab.rl_config.TTFSearchPath.append(str(FONTS_DIR) + "/backend/static/fonts")
+pdfmetrics.registerFont(
+    TTFont(Fonts.MONTSERRAT_BOLD_ITALIC, Fonts.MONTSERRAT_BOLD_ITALIC_FILE)
+)
+pdfmetrics.registerFont(TTFont(Fonts.MONTSERRAT_BOLD, Fonts.MONTSERRAT_BOLD_FILE))
 
 
-def get_canvas(*, font_size: int = 15, font: Fonts = Fonts.MONTSERRAT_BOLD_ITALIC, packet: Optional[io.BytesIO] = None):
+def get_canvas(
+    *,
+    font_size: int = 15,
+    font: Fonts = Fonts.MONTSERRAT_BOLD_ITALIC,
+    packet: Optional[io.BytesIO] = None
+):
     if packet is None:
         packet = io.BytesIO()
 
