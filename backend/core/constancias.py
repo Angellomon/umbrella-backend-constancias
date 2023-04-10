@@ -9,16 +9,16 @@ from backend.core.pdf.writer import (
     merge_pdf_template,
     replace_text_in_pdf,
 )
+from backend.models.asistentes import Asistente
+from backend.models.eventos import Evento
 
 
 # BUG: in replace_text opt (new pdf clones data from old doc)
-def generar_pdf_constancia_bytes(
-    folio: str, nombre_asistente: str, template: str, replace_text: bool = False
-):
-    pdf_template = get_pdf_template(template)  # type:ignore
+def generar_pdf_constancia_bytes(asistente: Asistente, evento: Evento):
+    pdf_template = get_pdf_template(evento.template)  # type:ignore
     # replace_text = True
 
-    if replace_text:
+    if evento.replace_text:
         pdf_final_bytes = replace_text_in_pdf(
             pdf_template, {"NOMBREPERSONA": "", "NUMFOL": ""}
         )
@@ -29,22 +29,39 @@ def generar_pdf_constancia_bytes(
         # )
 
     else:
+
+        folio_settings = evento.render_settings.folio
+        nombre_settings = evento.render_settings.nombre
+
         packet_folio = BytesIO()
         canvas_folio = get_canvas(
-            font_size=55, font=Fonts.MONTSERRAT_BOLD_ITALIC, packet=packet_folio
+            font_size=folio_settings.font_size,
+            font=folio_settings.font,
+            packet=packet_folio,
         )
 
-        canvas_folio.drawString(30, 180, f"# {folio}")
+        if folio_settings.chars_before:
+            folio = f"{folio_settings.chars_before} {asistente.folio}".strip()
+        else:
+            folio = asistente.folio.strip()
+
+        canvas_folio.drawString(
+            folio_settings.position[0], folio_settings.position[1], folio
+        )
         canvas_folio.save()
         packet_folio.seek(0)
 
         packet_nombre = BytesIO()
         canvas_nombre = get_canvas(
-            font_size=75, font=Fonts.MONTSERRAT_BOLD_ITALIC, packet=packet_nombre
+            font_size=nombre_settings.font_size,
+            font=nombre_settings.font,
+            packet=packet_nombre,
         )
 
         canvas_nombre.drawCentredString(
-            950, 630, nombre_asistente.upper().replace("  ", " ")
+            nombre_settings.position[0],
+            nombre_settings.position[1],
+            asistente.nombre_completo,
         )
         canvas_nombre.save()
         packet_nombre.seek(0)
