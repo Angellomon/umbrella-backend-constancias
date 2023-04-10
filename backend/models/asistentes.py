@@ -24,9 +24,9 @@ class AsistenteBase(BaseModel):
         else:
             nombres = f"{self.primer_nombre}"
 
-        nombre_completo = f"{nombres} {apellidos}".upper()
+        nombre_completo = f"{nombres} {apellidos}"
 
-        return nombre_completo
+        return nombre_completo.upper().replace("  ", " ")
 
 
 class Asistente(AsistenteBase):
