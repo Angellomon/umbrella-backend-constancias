@@ -2,7 +2,7 @@ from io import BytesIO
 from typing import Optional
 
 from PyPDF2 import PdfReader
-from backend.core.pdf.canvas import Fonts, get_canvas
+from backend.core.pdf.canvas import get_canvas
 from backend.core.pdf.writer import (
     get_pdf,
     get_pdf_template,
@@ -11,6 +11,55 @@ from backend.core.pdf.writer import (
 )
 from backend.models.asistentes import Asistente
 from backend.models.eventos import Evento
+
+
+_default_linebreak = 16
+
+
+def calc_char_tolerance(s: str):
+    words = s.split()
+
+    return int((sum([len(w) for w in words]) / len(words)) / 3)
+
+
+def get_linebreaks(
+    s: str, target_length: int, char_tolerance: Optional[int] = 2
+) -> list[str]:
+    """
+    returns an array which elements str length means target_length with a tolerance
+    """
+    if char_tolerance is None:
+        char_tolerance = calc_char_tolerance(s)
+
+    words = s.split()
+    result_strings: list[str] = []
+    words_group = []
+    prev_length = prev_word_i = i = 0
+
+    for word in words:
+        words_group.append(word)
+        length = len(word) + prev_length
+
+        if (
+            length
+            in range(target_length - char_tolerance, target_length + char_tolerance + 1)
+            or length > target_length
+        ):
+            result_strings.append(" ".join(words_group))
+
+            words_group = []
+            prev_length = 0
+            prev_word_i = i
+
+            continue
+
+        prev_length += length
+        i += 1
+
+    if prev_length > 0:
+        result_strings.append(*words[prev_word_i + 1 : :])
+
+    return result_strings
 
 
 # BUG: in replace_text opt (new pdf clones data from old doc)
@@ -58,11 +107,21 @@ def generar_pdf_constancia_bytes(asistente: Asistente, evento: Evento):
             packet=packet_nombre,
         )
 
-        canvas_nombre.drawCentredString(
-            nombre_settings.position[0],
-            nombre_settings.position[1],
-            asistente.nombre_completo,
-        )
+        words_linebreak = nombre_settings.words_linebreak or _default_linebreak
+
+        words = get_linebreaks(asistente.nombre_completo, words_linebreak)
+
+        i = 0
+
+        for word in words:
+            canvas_nombre.drawCentredString(
+                nombre_settings.position[0],
+                nombre_settings.position[1] - nombre_settings.vertical_spacing * i,
+                word,
+            )
+
+            i += 1
+
         canvas_nombre.save()
         packet_nombre.seek(0)
 
