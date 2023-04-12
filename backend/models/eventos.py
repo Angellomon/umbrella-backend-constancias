@@ -18,6 +18,9 @@ class TextOptions(BaseModel):
     position: list[int]
     chars_before: str = ""
 
+    words_linebreak: Optional[int] = None
+    vertical_spacing: int = 32
+
 
 class RenderSettings(BaseModel):
     folio: TextOptions = TextOptions(
