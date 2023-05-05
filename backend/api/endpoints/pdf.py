@@ -1,11 +1,13 @@
 from fastapi import APIRouter, Depends, Response
 from pydantic import EmailStr
 from backend.core.errors import AsistenteNotFound, EventoNotFound
-from backend.crud.asistentes import buscar_asistente
+from backend.crud.asistentes import buscar_asistente, update_asistente
 
 from backend.db.mongodb import Database, get_database
 from backend.core.constancias import generar_pdf_constancia_bytes
 from PyPDF2 import PdfReader
+
+from backend.models.asistentes import AsistenteUpdate
 
 from ...crud.eventos import get_evento as _get_evento
 
@@ -31,6 +33,8 @@ async def obtener_pdf_asistente(
     resultado.seek(0)
 
     r = resultado.read()
+
+    await update_asistente(db, asistente.clave, AsistenteUpdate(ya_descargo=True))
 
     return Response(
         content=r,
