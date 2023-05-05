@@ -57,7 +57,13 @@ def get_linebreaks(
         i += 1
 
     if prev_length > 0:
-        result_strings.append(*words[prev_word_i + 1 : :])
+        if prev_word_i == 0 or len(result_strings) == 0:
+            result_strings.append(" ".join(words_group))
+        else:
+            result_strings.append(*words[prev_word_i + 1 : :])
+
+    if len(result_strings) == 0:
+        result_strings.append(" ".join(words_group))
 
     return result_strings
 
@@ -121,6 +127,8 @@ def generar_pdf_constancia_bytes(asistente: Asistente, evento: Evento):
             )
 
             i += 1
+
+        print(words)
 
         canvas_nombre.save()
         packet_nombre.seek(0)
