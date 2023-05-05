@@ -60,7 +60,8 @@ def get_linebreaks(
         if prev_word_i == 0 or len(result_strings) == 0:
             result_strings.append(" ".join(words_group))
         else:
-            result_strings.append(*words[prev_word_i + 1 : :])
+            print(prev_word_i, prev_length, result_strings)
+            result_strings.append(" ".join(words[prev_word_i + 1 : :]))
 
     if len(result_strings) == 0:
         result_strings.append(" ".join(words_group))
