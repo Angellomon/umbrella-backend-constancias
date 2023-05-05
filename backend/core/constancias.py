@@ -13,7 +13,7 @@ from backend.models.asistentes import Asistente
 from backend.models.eventos import Evento
 
 
-_default_linebreak = 16
+_default_linebreak = 106
 
 
 def calc_char_tolerance(s: str):
