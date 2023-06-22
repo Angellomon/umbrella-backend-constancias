@@ -21,6 +21,8 @@ class TextOptions(BaseModel):
     words_linebreak: Optional[int] = None
     vertical_spacing: int = 32
 
+    hex_color: str = "#000000"
+
 
 class RenderSettings(BaseModel):
     folio: TextOptions = TextOptions(

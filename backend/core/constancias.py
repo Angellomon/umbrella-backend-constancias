@@ -2,6 +2,7 @@ from io import BytesIO
 from typing import Optional
 
 from PyPDF2 import PdfReader
+from reportlab.lib.colors import HexColor
 from backend.core.pdf.canvas import get_canvas
 from backend.core.pdf.writer import (
     get_pdf,
@@ -96,6 +97,8 @@ def generar_pdf_constancia_bytes(asistente: Asistente, evento: Evento):
             packet=packet_folio,
         )
 
+        canvas_folio.setFillColor(HexColor(folio_settings.hex_color))
+
         if folio_settings.chars_before:
             folio = f"{folio_settings.chars_before} {asistente.folio}".strip()
         else:
@@ -113,6 +116,8 @@ def generar_pdf_constancia_bytes(asistente: Asistente, evento: Evento):
             font=nombre_settings.font,
             packet=packet_nombre,
         )
+
+        canvas_nombre.setFillColor(HexColor(nombre_settings.hex_color))
 
         words_linebreak = nombre_settings.words_linebreak or _default_linebreak
 
