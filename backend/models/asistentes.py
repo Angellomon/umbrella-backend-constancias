@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, validator
 
 from ..core.claves import generar_clave
 
@@ -14,6 +14,10 @@ class AsistenteBase(BaseModel):
     correo: EmailStr
     ya_descargo: bool = False
     clave_evento: str = ""
+
+    @validator("correo")
+    def format_correo(cls, correo: str):
+        return correo.lower()
 
     @property
     def nombre_completo(self) -> str:
