@@ -60,8 +60,35 @@ async def test_get_pdf_template():
     print(pdf)
 
 
+async def convert_email_to_lowercase():
+    from loguru import logger
+
+    CLAVE_EVENTO = "hmmm"
+    client = AsyncIOMotorClient("mongodb+srv://ayyy:lmao@cluster.mongodb.net")
+
+    db = client["CONSTANCIAS"]["asistentes"]
+
+    cursor = db.find({"clave_evento": CLAVE_EVENTO})
+
+    asistentes = []
+
+    async for doc in cursor:
+        asistentes.append({"id": doc["_id"], "correo": doc["correo"]})
+
+    logger.debug(asistentes)
+
+    for asistente in asistentes:
+        await db.update_one(
+            {"_id": asistente["id"]}, {"$set": {"correo": asistente["correo"].lower()}}
+        )
+
+        logger.debug(f"updated: {asistente} with {asistente['correo'].lower()}")
+
+    logger.debug("finished")
+
+
 async def _main():
-    await test_get_pdf_template()
+    await convert_email_to_lowercase()
 
 
 if __name__ == "__main__":
