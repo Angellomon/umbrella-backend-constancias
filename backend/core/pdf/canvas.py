@@ -32,7 +32,8 @@ def get_canvas(
     *,
     font_size: int = 15,
     font: Fonts = Fonts.MONTSERRAT_BOLD_ITALIC,
-    packet: Optional[io.BytesIO] = None
+    packet: Optional[io.BytesIO] = None,
+    color: Optional[str] = None
 ):
     if packet is None:
         packet = io.BytesIO()
@@ -40,5 +41,8 @@ def get_canvas(
     c = canvas.Canvas(packet, pagesize=landscape((5000, 6000)))
 
     c.setFont(font, font_size)
+
+    if color is not None:
+        c.setFillColor(color)
 
     return c

@@ -17,6 +17,7 @@ class TextOptions(BaseModel):
     font: Fonts = Fonts.MONTSERRAT_BOLD_ITALIC
     position: list[int]
     chars_before: str = ""
+    hex_color: str = "#000000"
 
     words_linebreak: Optional[int] = None
     vertical_spacing: int = 32

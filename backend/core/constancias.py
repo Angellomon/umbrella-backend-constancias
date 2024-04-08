@@ -95,6 +95,7 @@ def generar_pdf_constancia_bytes(asistente: Asistente, evento: Evento):
             font_size=folio_settings.font_size,
             font=folio_settings.font,
             packet=packet_folio,
+            color=folio_settings.hex_color
         )
 
         canvas_folio.setFillColor(HexColor(folio_settings.hex_color))
@@ -115,6 +116,7 @@ def generar_pdf_constancia_bytes(asistente: Asistente, evento: Evento):
             font_size=nombre_settings.font_size,
             font=nombre_settings.font,
             packet=packet_nombre,
+            color=nombre_settings.hex_color
         )
 
         canvas_nombre.setFillColor(HexColor(nombre_settings.hex_color))
