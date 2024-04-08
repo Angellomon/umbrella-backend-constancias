@@ -4,7 +4,7 @@ from enum import Enum
 from typing import Optional
 
 import reportlab
-from reportlab.pdfbase import pdfmetrics
+from reportlab.lib.colors import HexColor
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import landscape
@@ -43,6 +43,6 @@ def get_canvas(
     c.setFont(font, font_size)
 
     if color is not None:
-        c.setFillColor(color)
+        c.setFillColor(HexColor(color))
 
     return c
