@@ -1,11 +1,10 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends, Query, Response
 from pydantic import EmailStr
 from backend.core.errors import AsistenteNotFound, EventoNotFound
 from backend.crud.asistentes import buscar_asistente, update_asistente
 
 from backend.db.mongodb import Database, get_database
 from backend.core.constancias import generar_pdf_constancia_bytes
-from PyPDF2 import PdfReader
 
 from backend.models.asistentes import AsistenteUpdate
 
@@ -16,7 +15,9 @@ router = APIRouter()
 
 @router.get("/{clave_evento}")
 async def obtener_pdf_asistente(
-    clave_evento: str, correo: EmailStr, db: Database = Depends(get_database)
+    clave_evento: str,
+    correo: EmailStr = Query(...),
+    db: Database = Depends(get_database),
 ):
     evento = await _get_evento(db, clave_evento)
 
